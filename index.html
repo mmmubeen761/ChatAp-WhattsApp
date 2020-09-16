@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA-WhatsApp</title>
+    <link rel="icon" href="th.png" type="Image/icon type">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link href="css/bootstrap-4.3.1.min.css" rel="stylesheet" />
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js"></script> -->
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCnu1spoqhRkSKUn9-tc-ZXK60EioE2M1s",
+            authDomain: "ma-chatapp.firebaseapp.com",
+            databaseURL: "https://ma-chatapp.firebaseio.com",
+            projectId: "ma-chatapp",
+            storageBucket: "ma-chatapp.appspot.com",
+            messagingSenderId: "326979711514",
+            appId: "1:326979711514:web:514ce3fb061bcd62ac57a3",
+            measurementId: "G-81YCXP0WPQ"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+</head>
+
+<body onload="spin()">
+    <div id="myDiv"><img id="myImage" class="img-fluid text-center" src="tt.png">
+    </div>
+    <div class="container-fluid chatbox">
+        <div class="row h-100">
+            <div class="col-md-4 pr-0 d-none d-md-block bg-light" id="side1">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-1 col-sm-1 col-md-1 d-md-none">
+                                <i class="fas fa-arrow-left mt-2 d-md-none" style="cursor: pointer;"></i>
+                            </div>
+                            <div class="col-7 col-sm-7 col-md-7">
+                                <img id="imgProfile" class="rounded-circle ppic" src="https://cdn3.iconfinder.com/data/icons/social-messaging-productivity-6/128/profile-male-circle2-512.png" title="" alt="">
+                                <span class="ml-2" id="xxx"></span>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2">
+                                <a href="#" style="float: right;" data-toggle="modal" data-target="#modalNotificationList" onclick="populateNotification()">
+                                    <i class="fas fa-bell icon mt-2"></i>
+                                    <span id="notification">0</span>
+                                </a>
+
+                                <div class="modal fade" id="modalNotificationList">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    All User Requests
+                                                    <span class="close" data-dismiss="modal" style="cursor: pointer;">&times;</span>
+                                                </div>
+                                                <ul class="list-group list-group-flush " id="fstNotification">
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2">
+                                <div class="dropleft">
+                                    <span class="dropdown-toggle" data-toggle="dropdown" style="float: right">
+                                        <i class="fas fa-ellipsis-v icon mt-2 mr-2" style="cursor: pointer;" onclick="populateFreindList()"></i>
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <a href="#" id="link" onclick="populateUserList()" class="dropdown-item" data-toggle="modal" data-target="#modalUserList">All Users</a>
+                                        <a href="#" id="linkNewChat" onclick="populateFreindList()" class="dropdown-item" data-toggle="modal" data-target="#modalFreindList">New Chat</a>
+                                        <a href=" # " id="linksignin" onclick="signIn()" class="dropdown-item ">Sign In</a>
+                                        <a href="# " id="linksignout" onclick="signOut()" class="dropdown-item" style="display:none;">Sign Out</a>
+                                    </div>
+                                    <div class="modal fade" id="modalFreindList">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        Freind List
+                                                        <span class="close" data-dismiss="modal" style="cursor: pointer;">&times;</span>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush " id="fstFreind">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="modalUserList">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        All Users List
+                                                        <span class="close" data-dismiss="modal" style="cursor: pointer;">&times;</span>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush " id="fstUser">
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush" id="lstChat">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 pl-0 bg-light" id="side2">
+                <div class="card " style="display: none;" id="chatPanel">
+                    <div class="card-header ">
+                        <div class="row ">
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 ">
+                                <i class="fas fa-list mt-3 ml-1 " style="cursor: pointer; " onclick="showChat()"></i>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-1 ">
+                                <img class="mainpic rounded-circle" id="imgChat" src="http://www.bigleaf.net/wp-content/uploads/2017/10/avatar-placeholder.png " alt=" ">
+                            </div>
+                            <div class="col-5 col-sm-5 col-md-5 col-lg-7 ">
+                                <div class="name" id="divChatName">Any Name</div>
+                                <div class="under-name" id="divChatSeen">Last seen (off) </div>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-3 icon ">
+                                <i class="fas fa-trash" onclick="dleteall()"></i>
+                                <span class="dropdown">
+                                    <span class="dropdown-toggle" data-toggle="dropdown" >
+                                        <i class="fas fa-paperclip ml-4" ></i>
+                                    </span>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item " onclick="chooseImage()">Image
+                                            <input type="file" name="" id="imageFile" onchange="sendImage(this)" accept="Image/*" style="display: none;">
+                                        </a>
+                                    <a href=" # " class="dropdown-item " onclick="alert('Sorry &#128528')">Document</a>
+                                    <a href="# " class="dropdown-item" onclick="alert('Sorry &#128528')">Camera</a>
+                                    <a href="# " class="dropdown-item" onclick="alert('Sorry &#128528')">Video</a>
+                                </div>
+                                </span>
+                                <i class="fas fa-ellipsis-v ml-4 d-none d-md-inline "></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body " id="messages">
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row" style="position: relative;">
+                            <div class="col-md-12" id="emoji" style="display: none;">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#smiliey" role="tab" aria-controls="home" aria-selected="true">Smiliey</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="smiliey" role="tabpanel" aria-labelledby="home-tab"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2 col-sm-2 col-md-1" style="cursor: pointer;">
+                                <i class="fas fa-grin fa-2x  ml-1" onclick="showEmojiPanel()"></i>
+                            </div>
+                            <div class="col-8 col-md-10 ">
+                                <input type="text " onkeyup="changeSendIcon(this)" placeholder="Type here " onfocus="hideEmojiPanel()" class="form-control form-rounded" name=" " id="txtMessage">
+                            </div>
+                            <div class="col-2 col-md-1">
+                                <i id="audio" style="cursor: pointer;" onclick="record(this)" class="fas fa-microphone fa-2x"></i>
+                                <i id="send" onclick="sendMessage()" class="fas fa-paper-plane fa-2x" style="display:none;"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divStart" class="text-center">
+                    <i class="fas fa-comments mt-5 text-success" style="font-size: 200px;"></i>
+                    <h2 class="m-3 ">Select your freind from the list and Satrt Chating</h2>
+                    <button onclick="signIn()" class="btn btn-success">Sign In</button>
+                    <button onclick="signOut()" class="btn btn-success">Sign Out</button><br>
+                    <a href="# " onclick="showChat()" class="d-md-none mt-5 text-success">New Chat</a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- js links -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI " crossorigin="anonymous "></script>
+    <script src="https://kit.fontawesome.com/5c9fe8a074.js" crossorigin="anonymous "></script>
+    <script src="app.js"></script>
+    <script src="firebase-messaging.js"></script>
+    <!-- <script src="firebase-messaging-sw.js"></script> -->
+</body>
+
+</html>
+
+</html>
